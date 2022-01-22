@@ -1,0 +1,19 @@
+{
+  "name": "win-desktop-stats",
+  "version": "1.0.0",
+  "description": "desktop background process to log windows activity",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Solomon Pierce",
+  "license": "MIT",
+  "dependencies": {
+    "active-win": "^7.7.0",
+    "dotenv": "^14.2.0",
+    "firebase": "^9.6.4",
+    "nodemon": "^2.0.15"
+  }
+}
