@@ -1,3 +1,4 @@
+import activeWindow from 'active-win';
 import { collection, addDoc, getFirestore, Timestamp } from 'firebase/firestore'; 
 import { initializeApp } from 'firebase/app';
 
@@ -9,18 +10,14 @@ const firebaseConfig = {
     messagingSenderId: "106820392764",
     appId: "1:106820392764:web:2627df31632f10c2e13039",
     measurementId: "G-CF004K6CP8"
-  };
+};
   
-  // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-import activeWindow from 'active-win';
-
 let lastWindow = "";
-
-async function sendWindowInfo(){
+async function sendWindowInfo(userId) {
   let options = {screenRecordingPermission : false};
   
   let windowInfo = await activeWindow(options);
@@ -35,13 +32,17 @@ async function sendWindowInfo(){
     const docRef = await addDoc(collection(db, "stats"), {
       time : Timestamp.now(),
       windowData : windowInfo,
+      userId : userId
     });
   
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-
+  
 }
 
-setInterval(sendWindowInfo, 60 * 1000);
+console.log("Please enter your UID:");
+const uid = process.stdin.read();
+
+setInterval(sendWindowInfo(uid), 60 * 1000);
